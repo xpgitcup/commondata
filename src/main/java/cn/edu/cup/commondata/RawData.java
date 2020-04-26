@@ -5,35 +5,45 @@
  */
 package cn.edu.cup.commondata;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author LiXiaoping
  */
 public class RawData {
-    
+
     private final Map<String, DataItem> dataItems;
 
     public RawData() {
         this.dataItems = new HashMap<>();
     }
 
-    public Map<String, DataItem> getDataItems() {
-        return dataItems;
+    public String exportToString() {
+        return JSON.toJSONString(dataItems);
     }
 
-    public void newChild(String typeNameAndName) {
-        newItem("子节点列表", DataValueType.object, "", typeNameAndName);
+    public String exportToStringWithFormat() {
+        return JSON.toJSONString(dataItems, SerializerFeature.PrettyFormat);
+    }
+
+    public Map<String, DataItem> getDataItems() {
+        return dataItems;
     }
 
     public void setValue(String key, String value) {
         dataItems.get(key).setValueString(value);
     }
 
+    public void newChild(String typeNameAndName) {
+        newItem("子节点列表", DataValueType.object, "", typeNameAndName);
+    }
+
     public void newVector2D(String key, String unit) {
-        newItem(key, DataValueType.vector2D, unit, "0.0, 0.0");
+        newItem(key, DataValueType.vector2D, unit, "[{0.0, 0.0}]");
     }
 
     public void newVector2D(String key, String unit, String valueString) {
@@ -41,7 +51,7 @@ public class RawData {
     }
 
     public void newVector(String key, String unit) {
-        newItem(key, DataValueType.vector, unit, "0.0");
+        newItem(key, DataValueType.vector, unit, "[0.0]");
     }
 
     public void newVector(String key, String unit, String valueString) {
@@ -59,5 +69,5 @@ public class RawData {
     public void newItem(String key, DataValueType dataValueType, String unit, String valueString) {
         dataItems.put(key, new DataItem(dataValueType, unit, valueString));
     }
-    
+
 }

@@ -18,14 +18,18 @@ public class DataItem {
     public DataItem(DataValueType dataValueType, String unit, String valueString) {
         this.dataValueType = dataValueType;
         this.unit = unit;
+        this.valueString = valueString;
+    }
+
+    public DataItem() {
+        this.dataValueType = DataValueType.scalar;
+        this.unit = "";
+        this.valueString = "";
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-//        sb.append("DataItem{unit=").append(unit);
-//        sb.append(", valueString=").append(valueString);
-//        sb.append('}');
         sb.append(valueString);
         if (!unit.isEmpty()) {
             sb.append("(").append(unit).append(")");
