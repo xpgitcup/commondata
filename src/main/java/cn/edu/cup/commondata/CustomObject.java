@@ -59,7 +59,7 @@ public abstract class CustomObject {
      * --属性数据的赋值
      * */
 
-    /*
+ /*
      * 将属性的数据更新到字符串中
      * */
     private void exportToRawData() {
@@ -69,7 +69,9 @@ public abstract class CustomObject {
                 String fname = f.getName();
                 String key = propertySettings.get(fname);
                 f.setAccessible(true);
-                if (!key.isEmpty()) getRawData().setValue(key, JSON.toJSONString(f.get(this)));
+                if (!key.isEmpty()) {
+                    getRawData().setValue(key, JSON.toJSONString(f.get(this)));
+                }
             } catch (IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(CustomObject.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -86,7 +88,7 @@ public abstract class CustomObject {
                 System.out.println(f.getName());
                 String fname = f.getName();
                 String key = propertySettings.get(fname);
-                if (!key.isEmpty()) {
+                if ((key != null) && (!key.isEmpty())) {
                     System.out.println("赋值....");
                     DataItem item = getRawData().getDataItems().get(key);
                     f.setAccessible(true);
@@ -169,12 +171,8 @@ public abstract class CustomObject {
         }
     }
 
-
     //--------------------------------------------------------------------------
-
-
     //--------------------------------------------------------------------------
-
     public abstract String getDataFileName();
 
     public double getKeyDouble(String key) {

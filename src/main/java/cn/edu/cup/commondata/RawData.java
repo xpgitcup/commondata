@@ -47,11 +47,11 @@ public class RawData {
     }
 
     public void newVector(String key, String unit) {
-        newItem(key, DataValueType.vector, unit, "[0.0]");
+        newVector(key, unit, 0.0);
     }
 
-    public void newVector(String key, String unit, String valueString) {
-        newItem(key, DataValueType.vector, unit, valueString);
+    public void newVector(String key, String unit, double... x) {
+        newItem(key, DataValueType.vector, unit, JSON.toJSONString(x));
     }
 
     public void newScalar(String key, String unit, String valueString) {
