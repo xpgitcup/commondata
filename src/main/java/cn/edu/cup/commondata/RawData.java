@@ -38,10 +38,6 @@ public class RawData {
         dataItems.get(key).setValueString(value);
     }
 
-    public void newChild(String typeNameAndName) {
-        newItem("子节点列表", DataValueType.object, "", typeNameAndName);
-    }
-
     public void newVector2D(String key, String unit) {
         newItem(key, DataValueType.vector2D, unit, "[{0.0, 0.0}]");
     }

@@ -46,7 +46,6 @@ public abstract class CustomObject {
     protected void setupRawData() {
         rawData.newItem("名称", DataValueType.scalar, "", "通用对象");
         rawData.newItem("型号", DataValueType.scalar, "", "");
-        rawData.newChild("");
     }
 
     @Override
@@ -195,15 +194,6 @@ public abstract class CustomObject {
 
     public void setKeyValue(String key, String value) {
         rawData.setValue(key, value);
-    }
-
-    public String[] getChildren() {
-        String item = rawData.getDataItems().get("子节点列表").getValueString();
-        if ((item == null) || item.isEmpty()) {
-            return null;
-        } else {
-            return item.split(" ");
-        }
     }
 
     public void setName(String s) {
