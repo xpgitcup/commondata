@@ -12,12 +12,15 @@ import java.util.logging.Logger;
 
 import static cn.edu.cup.commondata.Tools.readFromFile;
 import static cn.edu.cup.commondata.Tools.writeToFile;
+import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 
 public abstract class CustomObject {
 
     private String dataPath;
     private final RawData rawData;
     private Map<String, String> propertySettings;
+    private final Map<String, PolynomialFunction> propertyPolies;
+    // 记录日志
     public static final Logger LOG = Logger.getLogger(CustomObject.class.getName());
 
     /**
@@ -27,6 +30,7 @@ public abstract class CustomObject {
         rawData = new RawData();
         setupRawData();
         propertySettings = new HashMap<>();
+        propertyPolies = new HashMap<>();
 
         String configFileName = "config/" + this.getClass().getSimpleName() + ".json";
         File file = new File(configFileName);
@@ -97,7 +101,11 @@ public abstract class CustomObject {
                             f.setDouble(this, getKeyDouble(key));
                             break;
                         case vector:
-                            f.set(this, getKeyVector(key));
+                            double[] x = getKeyVector(key);
+                            f.set(this, x);
+                            if (propertyPolies.get(fname) == null) {
+                                propertyPolies.put(fname, new PolynomialFunction(x));
+                            }
                             break;
                         case vector2D:
                             f.set(this, getKeyVector2D(key));
@@ -222,4 +230,8 @@ public abstract class CustomObject {
         return rawData;
     }
 
+    public Map<String, PolynomialFunction> getPropertyPolies() {
+        return propertyPolies;
+    }
+    
 }
