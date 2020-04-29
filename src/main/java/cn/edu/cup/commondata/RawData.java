@@ -47,10 +47,10 @@ public class RawData {
     }
 
     public void newVector(String key, String unit) {
-        newVector(key, unit, 0.0);
+        newVector(key, unit, new double[] {0.0});
     }
 
-    public void newVector(String key, String unit, double... x) {
+    public void newVector(String key, String unit, double[] x) {
         newItem(key, DataValueType.vector, unit, JSON.toJSONString(x));
     }
 

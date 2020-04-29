@@ -45,6 +45,9 @@ public abstract class CustomObject {
             }
             writeToFile(file, JSON.toJSONString(propertySettings, SerializerFeature.PrettyFormat));
         }
+        
+        // 更新一下属性--这样即使无法读取数据，也可以使用缺省数据
+        updateProperties();
     }
 
     protected void setupRawData() {
@@ -73,7 +76,7 @@ public abstract class CustomObject {
                 String fname = f.getName();
                 String key = propertySettings.get(fname);
                 f.setAccessible(true);
-                if (!key.isEmpty()) {
+                if ((key != null) && (!key.isEmpty())) {
                     getRawData().setValue(key, JSON.toJSONString(f.get(this)));
                 }
             } catch (IllegalArgumentException | IllegalAccessException ex) {
@@ -233,5 +236,5 @@ public abstract class CustomObject {
     public Map<String, PolynomialFunction> getPropertyPolies() {
         return propertyPolies;
     }
-    
+
 }
